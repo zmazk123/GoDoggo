@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<hr>
+<ul>
+{% for entry in entries.values %}
+    <li>
+        <text>Name: {{entry.name}}</text>
+        <text>Surname: {{entry.surname}}</text>
+    </li>
+{% endfor %}
+</ul>
+<form method="post" action="/">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit", name="save">New</button>
+</form>
+{% endblock %}
