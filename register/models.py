@@ -1,5 +1,7 @@
 from django.db import models
 import pyrebase
+from requests.exceptions import HTTPError
+import json
 
 config = {
     "apiKey": "AIzaSyAgaZYQDBNyfMNI3A7ocJB1DP_vHiUdo2o",
@@ -28,9 +30,17 @@ class User(models.Model):
         self.password = password
 
     def create(self):
-        auth.create_user_with_email_and_password(self.email, self.password)
+        try:
+            auth.create_user_with_email_and_password(self.email, self.password)
+        except HTTPError as e:
+            error = json.loads(e.strerror)
+            raise Exception(error['error']['message'])
     
     @staticmethod
     def authenticate(email, password):
-        user = auth.sign_in_with_email_and_password(email, password)
+        try:
+            user = auth.sign_in_with_email_and_password(email, password)
+        except HTTPError as e:
+            error = json.loads(e.strerror)
+            raise Exception(error['error']['message'])
         return user
