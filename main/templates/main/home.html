@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% block home %}
+
+{% ifequal request.session.authenticated "True" %}
+    <text>Logged in</text>
+    <a href="{% url 'logOut' %}">Log out</a>
+{% else %}
+    <text>Logged out</text>
+    <a href="{% url 'register' %}">Register</a>
+    <a href="{% url 'logIn' %}">Log in</a>
+{% endifequal %}
+{% endblock %}
