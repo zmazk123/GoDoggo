@@ -6,10 +6,13 @@
     <text>Logged in</text>
     <a href="{% url 'logOut' %}">Log out</a>
     <hr>
-    <a href="{% url 'createDog' %}">Create dog</a>
+    <h2>Create dog:</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit", name="save">Create</button>
+    </form>
 {% else %}
-    <text>Logged out</text>
-    <a href="{% url 'register' %}">Register</a>
-    <a href="{% url 'logIn' %}">Log in</a>
+    <h2>You are not authorized to be here!</h2>
 {% endifequal %}
 {% endblock %}
