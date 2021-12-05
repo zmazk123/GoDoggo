@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block home %}
+
+{% ifequal request.session.authenticated "True" %}
+    <text>Logged in</text>
+    <a href="{% url 'logOut' %}">Log out</a>
+    <hr>
+    <h2>Update dog:</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit", name="save">Update</button>
+    </form>
+{% else %}
+    <h2>You are not authorized to be here!</h2>
+{% endifequal %}
+{% endblock %}

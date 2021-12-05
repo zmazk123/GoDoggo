@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+{% block home %}
+
+{% ifequal request.session.authenticated "True" %}
+    <text>Logged in</text>
+    <a href="{% url 'logOut' %}">Log out</a>
+    <hr>
+    <h2>Dog:</h2>
+    <text>Name: {{dog.name}}</text>
+    <text>Breed: {{dog.breed}}</text>
+    <text>Age: {{dog.age}}</text>
+    <text>Description: {{dog.description}}</text>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete" />
+    </form>
+    <p><a href="updateDog">Update</a></p>
+{% else %}
+    <h2>You are not authorized to be here!</h2>
+{% endifequal %}
+{% endblock %}
