@@ -41,3 +41,19 @@ class Dog(models.Model):
     def save(self):
         data = {"name": self.name, "breed": self.breed, "age": self.age, "description": self.description, "uuid": self.uuid}
         database.child("Dogs").push(data)
+
+    @staticmethod
+    def getDogs(currentUserUUID):
+        return database.child("Dogs").order_by_child('uuid').equal_to(currentUserUUID).get().val()
+
+    @staticmethod
+    def getDogWithUid(uid):
+        return database.child("Dogs").order_by_key().equal_to(uid).get().val()[uid]
+
+    @staticmethod
+    def removeDogWithUid(uid):
+        database.child("Dogs").child(uid).remove()
+        
+    def updateDogWithUid(self, uid):
+        data = {"name": self.name, "breed": self.breed, "age": self.age, "description": self.description, "uuid": self.uuid}
+        database.child("Dogs").child(uid).update(data)

@@ -7,6 +7,14 @@
     <a href="{% url 'logOut' %}">Log out</a>
     <hr>
     <a href="{% url 'createDog' %}">Create dog</a>
+    <p>My dogs:</p>
+    {% for key, dog in currentUserDogs.items %}
+    <li>
+        <text>Name: {{dog.name}}</text>
+        <text>Breed: {{dog.breed}}</text>
+        <text><a href="dogs/{{key}}">View</a></text>
+    </li>
+{% endfor %}
 {% else %}
     <text>Logged out</text>
     <a href="{% url 'register' %}">Register</a>
