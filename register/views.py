@@ -13,11 +13,13 @@ def register(request):
             password = form.cleaned_data["password"]
             user = User(email, password)
             try: 
-                user.create()
+                uuid = user.create()
             except Exception as e:
                 message = errorMessageMap[str(e)]
                 return render(request,"register/register.html",{"form": form, "errorMessage": message})
+                
             request.session['authenticated']="True"
+            request.session['uuid']=uuid
         return HttpResponseRedirect("/")
 
     form = RegistrationForm()
@@ -30,12 +32,13 @@ def logIn(request):
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
             try:    
-                User.authenticate(email, password)
+                uuid = User.authenticate(email, password)
             except Exception as e:
                 message = errorMessageMap[str(e)]
                 return render(request,"register/logIn.html",{"form": form, "errorMessage": message})
 
             request.session['authenticated']="True"
+            request.session['uuid']=uuid
         return HttpResponseRedirect("/")
 
     form = LogInForm()
