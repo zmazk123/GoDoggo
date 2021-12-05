@@ -1,10 +1,19 @@
 from django.db import models
+import pyrebase
 
-# Create your models here.
+config = {
+    "apiKey": "AIzaSyAgaZYQDBNyfMNI3A7ocJB1DP_vHiUdo2o",
+    "authDomain": "godoggo-a18ac.firebaseapp.com",
+    "databaseURL": "https://godoggo-a18ac-default-rtdb.europe-west1.firebasedatabase.app",
+    "projectId": "godoggo-a18ac",
+    "storageBucket": "godoggo-a18ac.appspot.com",
+    "messagingSenderId": "929780314718",
+    "appId": "1:929780314718:web:31b97491b560bc07dc7acf"
+}
+
 
 firebase = pyrebase.initialize_app(config)
 database = firebase.database()
-auth = firebase.auth()
 
 class Dog(models.Model):
     name = models.CharField(max_length = 200)
