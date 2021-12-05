@@ -1,7 +1,8 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from main.forms import CreateNewDog
+from django.http import HttpResponse
 from main.models import Dog
+from .forms import CreateNewDog
 
 def index(request):
     uuid = request.session["uuid"]
@@ -17,13 +18,14 @@ def createDog(request):
             age = form.cleaned_data["age"]
             description = form.cleaned_data["description"]
             uuid = request.session["uuid"]
-            dog = Dog(name, breed, age, description, uuid)
-            dog.save()
+            newDog = Dog(name, breed, age, description, uuid)
+            newDog.save()
 
         return HttpResponseRedirect("/")
 
+
     form = CreateNewDog()
-    return render(request, 'main/updateDog.html', {"form": form})
+    return render(request, "main/createDog.html", {"form": form})
 
 def viewDog(request, dogUid):
     if request.method == "POST":

@@ -1,5 +1,7 @@
 from django.db import models
 import pyrebase
+from pyrebase.pyrebase import Database
+from register.models import User
 
 config = {
     "apiKey": "AIzaSyAgaZYQDBNyfMNI3A7ocJB1DP_vHiUdo2o",
@@ -11,9 +13,9 @@ config = {
     "appId": "1:929780314718:web:31b97491b560bc07dc7acf"
 }
 
-
 firebase = pyrebase.initialize_app(config)
 database = firebase.database()
+auth = firebase.auth()
 
 class Dog(models.Model):
     name = models.CharField(max_length = 200)
