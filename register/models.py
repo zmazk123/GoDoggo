@@ -31,21 +31,16 @@ class User(models.Model):
 
     def create(self):
         try:
-            user = auth.create_user_with_email_and_password(self.email, self.password)
+            auth.create_user_with_email_and_password(self.email, self.password)
         except HTTPError as e:
             error = json.loads(e.strerror)
             raise Exception(error['error']['message'])
-
-        uuid = user['localId']
-        return uuid
-
+    
     @staticmethod
     def authenticate(email, password):
         try:
-            auth.sign_in_with_email_and_password(email, password)
+            user = auth.sign_in_with_email_and_password(email, password)
         except HTTPError as e:
             error = json.loads(e.strerror)
             raise Exception(error['error']['message'])
-
-        uuid = auth.current_user['localId']
-        return uuid
+        return user
