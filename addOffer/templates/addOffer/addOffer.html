@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block home %}
+
+<ul>
+{% for entry in entries.values %}
+    <li>
+        <text>date: {{entry.date}}</text>
+        <text>dogName: {{entry.dogName}}</text>
+    </li>
+{% endfor %}
+</ul>
+<form method="POST" class="form-group">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add Offer</button>
+</form>
+{% endblock %}
