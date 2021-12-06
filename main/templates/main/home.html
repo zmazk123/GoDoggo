@@ -5,6 +5,7 @@
 {% ifequal request.session.authenticated "True" %}
     <text>Logged in</text>
     <a href="{% url 'logOut' %}">Log out</a>
+    <a href="{% url 'addOffer' %}">Add offer</a>
 {% else %}
     <text>Logged out</text>
     <a href="{% url 'register' %}">Register</a>
