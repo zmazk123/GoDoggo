@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import AddOfferForm
 from .models import Offer
+from main.models import Dog
 
 import pyrebase
 from pyrebase.pyrebase import Database
@@ -26,14 +27,17 @@ def addOffer(request):
         form = AddOfferForm(request.POST)
         if form.is_valid():     
             date = form.cleaned_data["date"]
-            dogName = form.cleaned_data["dogName"]
+            dog = form.cleaned_data["dog"]
             location = form.cleaned_data["location"]
             uuid = request.session["uuid"]
-            offer = Offer(date, dogName, uuid, location)
+            offer = Offer(date, dog, uuid, location)
             offer.create()
         return HttpResponseRedirect("/")
 
     allOffers = Offer.getEntries()
+
+    uuid = request.session["uuid"]
+    #dogs=Dog.getDogs(uuid)
 
     form = AddOfferForm()
     return render(request, "addOffer/addOffer.html", {"entries":allOffers, "form":form})

@@ -22,24 +22,24 @@ database = firebase.database()
 
 class Offer:
     date = models.CharField(max_length=200)
-    dogName = models.CharField(max_length=200)
+    dog = models.CharField(max_length=200)
     uuid = models.CharField(max_length = 200)
     location = models.CharField(max_length = 200)
 
     def __init__(self):
         self.date = ""
-        self.dogName = ""
+        self.dog = ""
         self.uuid = ""
         self.location = ""
         
-    def __init__(self, date, dogName, uuid, location):
+    def __init__(self, date, dog, uuid, location):
         self.date = date
-        self.dogName = dogName
+        self.dog = dog
         self.uuid = uuid
         self.location = location
 
     def create(self):
-        data = {"date": self.date, "dogName": self.dogName, "uuid": self.uuid, "location": self.location}
+        data = {"date": self.date, "dog": self.dog, "uuid": self.uuid, "location": self.location}
         database.child("Offers").push(data)
 
     @staticmethod
