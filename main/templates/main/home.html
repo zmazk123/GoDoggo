@@ -2,22 +2,41 @@
 
 {% block home %}
 
-{% ifequal request.session.authenticated "True" %}
-    <text>Logged in</text>
-    <a href="{% url 'logOut' %}">Log out</a>
-    <hr>
-    <a href="{% url 'createDog' %}">Create dog</a>
-    <p>My dogs:</p>
-    {% for key, dog in currentUserDogs.items %}
-    <li>
-        <text>Name: {{dog.name}}</text>
-        <text>Breed: {{dog.breed}}</text>
-        <text><a href="dogs/{{key}}">View</a></text>
-    </li>
-{% endfor %}
+{% if request.session.authenticated == "True" %}
+
+<div class="container">
+    <h2 style="margin-top:30px;margin-bottom: 15px;">Pozdravljen!</h2>
+
+    <div style="margin-top: 30px;margin-bottom: 15px;">
+        <h4 style="margin:0;display: inline-block;vertical-align: middle;">Moje živali</h4>
+        <a class="btn btn-info me-2" href="{% url 'createDog' %}"
+            style="display: inline-block;vertical-align: middle;margin-left: 20px;color: white;">Dodaj novo</a>
+    </div>
+
+
+    <div id="petsList">
+        <div class="row">
+            {% for key, dog in currentUserDogs.items %}
+
+            <div class="card col-md-4 pet-element"
+                style="width: 18rem;background-color: white;border: none;margin: 10px;padding: 0;">
+                <img class="card-img-top"
+                    src="https://petzone.arta-persada.com/wp-content/uploads/2021/07/images-801.jpeg"
+                    alt="Card image cap">
+                <div class="card-body" style="padding: 15px;">
+                    <h5 class="card-title">{{dog.name}}</h5>
+                    <p class="card-text">{{dog.description}}</p>
+                    <a class="btn btn-sm btn-secondary" href="dogs/{{key}}">Podrobnosti</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% else %}
-    <text>Logged out</text>
-    <a href="{% url 'register' %}">Register</a>
-    <a href="{% url 'logIn' %}">Log in</a>
-{% endifequal %}
+<div class="container">
+    <h2 style="margin-top: 50px;margin-bottom: 20px;">Vpiši se za dostop</h2>
+    <p>Ali ste bili kdaj zaskrbljeni, da vaš pes ne bo dobil dovolj telovadbe zaradi vašega zasedenega urnika? Potem imamo rešitev za vas! GoDoggo ponuja platformo, preko katere lahko najdete sprehajalca vašega kožuharja, za tiste dni, ko preprosto nimate časa tega izvesti sami.</p>
+</div>
+{% endif %}
 {% endblock %}
