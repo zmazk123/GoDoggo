@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .forms import RegistrationForm, LogInForm
 from .models import User
+from .errorMessages import errorMessageMap
 
 def register(request):
     if request.method == "POST":
@@ -11,8 +12,14 @@ def register(request):
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
             user = User(email, password)
-            user.create()
+            try: 
+                uuid = user.create()
+            except Exception as e:
+                message = errorMessageMap[str(e)]
+                return render(request,"register/register.html",{"form": form, "errorMessage": message})
+                
             request.session['authenticated']="True"
+            request.session['uuid']=uuid
         return HttpResponseRedirect("/")
 
     form = RegistrationForm()
@@ -24,8 +31,14 @@ def logIn(request):
         if form.is_valid():     
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-            user = User.authenticate(email, password)
+            try:    
+                uuid = User.authenticate(email, password)
+            except Exception as e:
+                message = errorMessageMap[str(e)]
+                return render(request,"register/logIn.html",{"form": form, "errorMessage": message})
+
             request.session['authenticated']="True"
+            request.session['uuid']=uuid
         return HttpResponseRedirect("/")
 
     form = LogInForm()

@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+
+{% block home %}
+
+{% if request.session.authenticated == "True" %}
+
+<div class="container">
+    <h2 style="margin-top:30px;margin-bottom: 15px;">{{dog.name}}</h2>
+
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">Pasma</h6>
+                    <p class="mb-0 opacity-75">{{dog.breed}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">Starost</h6>
+                    <p class="mb-0 opacity-75">{{dog.age}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">Opis</h6>
+                    <p class="mb-0 opacity-75">{{dog.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <form method="post" style="display: inline-block;">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger" value="Delete" />
+        </form>
+
+        <a href="updateDog" class="btn btn-outline-secondary" style="display: inline-block;margin-left: 10px;">Update</a>
+    </div>
+
+</div>
+{% else %}
+    <h2>You are not authorized to be here!</h2>
+{% endif %}
+{% endblock %}
