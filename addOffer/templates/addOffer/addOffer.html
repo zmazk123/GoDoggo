@@ -2,17 +2,25 @@
 
 {% block home %}
 
-<ul>
-{% for entry in entries.values %}
-    <li>
-        <text>date: {{entry.date}}</text>
-        <text>dogName: {{entry.dogName}}</text>
-    </li>
-{% endfor %}
-</ul>
 <form method="POST" class="form-group">
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit" class="btn btn-success">Add Offer</button>
 </form>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Dog Name</th>
+    </tr>
+{% for entry in entries.values %}
+    <tr>
+        <td>{{entry.date}}</td>
+        <td>{{entry.location}}</td>
+        <td>{{entry.dogName}}</td>
+    </tr>
+{% endfor %}
+</table>
+</ul>
 {% endblock %}
