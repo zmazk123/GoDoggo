@@ -1,5 +1,5 @@
 from django import forms
 
 class AddOfferForm(forms.Form):
-    date = forms.DateTimeField(required="true")
+    date = forms.CharField()
     dogName = forms.CharField()

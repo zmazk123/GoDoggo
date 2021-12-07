@@ -20,15 +20,8 @@ auth = firebase.auth()
 database = firebase.database()
 
 
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, z):
-        if isinstance(z, datetime.datetime):
-            return (str(z))
-        else:
-            return super().default(z)
-
 class Offer:
-    date = models.DateField()
+    date = models.CharField(max_length=200)
     dogName = models.CharField(max_length=200)
 
     def __init__(self):
@@ -40,9 +33,8 @@ class Offer:
         self.dogName = dogName
 
     def create(self):
-        data = {"date": self.date, "dogName": self.dogName}
-        print(json.dumps(data,cls=DateTimeEncoder))
-        database.child("Offers").push(json.dumps(data,cls=DateTimeEncoder))
+        data = {"date": self.date, "dogName": self.dogName, "uuid": self.uuid, "location": self.location}
+        database.child("Offers").push(data)
 
     @staticmethod
     def getEntries():
