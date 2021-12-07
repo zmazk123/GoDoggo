@@ -50,6 +50,6 @@ def updateDog(request, dogUid):
         return HttpResponseRedirect("/")
 
     dog = Dog.getDogWithUid(dogUid)
-    form = CreateNewDog(initial={'name': dog['name'], 'breed': dog['breed'], 'age': dog['age'], 'description': dog['description']})
-    return render(request, 'main/updateDog.html', {"form": form})
+    form = CreateNewDog()
+    return render(request, 'main/updateDog.html', {"form": form, "dog":dog})
     
