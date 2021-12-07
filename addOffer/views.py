@@ -27,7 +27,9 @@ def addOffer(request):
         if form.is_valid():     
             date = form.cleaned_data["date"]
             dogName = form.cleaned_data["dogName"]
-            offer = Offer(date, dogName)
+            location = form.cleaned_data["location"]
+            uuid = request.session["uuid"]
+            offer = Offer(date, dogName, uuid, location)
             offer.create()
         return HttpResponseRedirect("/")
 
